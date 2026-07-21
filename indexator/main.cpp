@@ -47,6 +47,22 @@ int main(int argc, char *argv[])
     QObject::connect(&dataBase, &DataBaseManager::connectionSuccess, [&](){//-Сигнал успеш. подключения
         welcomeMessage<<"\nUspeshno pogkluchilis`!"<<Qt::endl;
 
+        /*--Отсюда начинается обход папок--*/
+
+        QDir runDir(QCoreApplication::applicationDirPath());
+
+        // Вариант 1 (Для текущей структуры: выходим из build/indexator)
+        QString targetPath = QDir::cleanPath(runDir.absolutePath() + "/../../textFiles");
+
+        // Проверяем: если по этому пути папки НЕТ, то пробуем Вариант 2 (стандартный для Qt)
+        if (!QDir(targetPath).exists()) {
+            targetPath = QDir::cleanPath(runDir.absolutePath() + "/../indexator/textFiles");
+        }
+
+        dataBase.scanDirectory(targetPath);
+
+        /*--Здесь он заканчивается--*/
+
         dataBase.disConnectium();
     });
 

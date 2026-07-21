@@ -3,8 +3,16 @@
 
 #include <QObject>
 #include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QSqlError>
 #include <QString>
+
+#include <QDir>
+#include <QFileInfo>
+#include <QFile>
+#include <QTextStream>
+#include <QMap>
+#include <QDebug>
 
 class DataBaseManager: public QObject
 {
@@ -15,6 +23,8 @@ public:
 
     void connectium(QString host, int port, QString user, QString password, QString name);
     void disConnectium();
+    void scanDirectory(const QString &path);
+    void processFile(const QString &filePath, const QString &fileName);
 
 private:
     QSqlDatabase diplomDataBase;

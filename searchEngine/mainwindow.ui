@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>994</width>
+    <height>633</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Поиск по словам</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QTableView" name="privateWordsView"/>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="wordInput"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="wordSearch">
+          <property name="text">
+           <string>Поиск слов</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="wordClean">
+          <property name="text">
+           <string>Очистка</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>База слов</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QTableView" name="allWordsView"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="allWordsSearch">
+          <property name="text">
+           <string>Смотрим все слова</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="allWordsClean">
+          <property name="text">
+           <string>Очистка</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="host"/>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="port"/>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="user"/>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="password"/>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="dataBase"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="connect">
+      <property name="text">
+       <string>Подключиться</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>994</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,3 +1,5 @@
 *.exe
 indexator/build/
 indexator/.qtcreator/CMakeLists.txt.user
+searchEngine/build/
+searchEngine/.qtcreator/CMakeLists.txt.user

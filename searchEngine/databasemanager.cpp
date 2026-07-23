@@ -55,12 +55,55 @@ void DataBaseManager::allWordsSearch(QTableView* table)
     }
     this->modelAll->setQuery(std::move(query));
     table->setModel(modelAll);
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 }
 
 void DataBaseManager::wordSearch(QTableView* table, QString wordInput)
 {
-    qDebug()<<"Poisk slova: "<<wordInput;
+    QStringList rawWords = wordInput.split(" ", Qt::SkipEmptyParts);
+    QStringList cleanWords;
+
+    for (QString word : rawWords) {
+        word = word.toLower();
+
+        while (!word.isEmpty() && !word[word.length() - 1].isLetterOrNumber()) {
+            word.chop(1);
+        }
+        while (!word.isEmpty() && !word[0].isLetterOrNumber()) {
+            word.remove(0, 1);
+        }
+
+        if (!word.isEmpty()) {
+            cleanWords.append(word);
+        }
+    }
+
+    if (cleanWords.isEmpty()) {
+        qWarning() << "Поисковый запрос пуст или содержит только знаки препинания!";
+        return;
+    }
+
+    QString sqlWords = "'" + cleanWords.join("', '") + "'";
+    int wordsCount = cleanWords.size();
+
+    QString sqlQueryText = QString(
+                               "SELECT f.file_path, SUM(fw.word_count) AS total_count "
+                               "FROM file_words fw "
+                               "JOIN files f ON fw.file_id = f.id "
+                               "JOIN words w ON fw.word_id = w.id "
+                               "WHERE w.word_text IN (%1) "
+                               "GROUP BY f.id, f.file_path "
+                               "HAVING COUNT(DISTINCT w.word_text) = %2 "
+                               "ORDER BY total_count DESC;"
+                               ).arg(sqlWords).arg(wordsCount);
+
+    this->modelPrivate->setQuery(sqlQueryText, this->myDb);
+    this->modelPrivate->setHeaderData(0, Qt::Horizontal, "Имя файла");
+    this->modelPrivate->setHeaderData(1, Qt::Horizontal, "Общая встречаемость");
+
+    table->setModel(this->modelPrivate);
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 void DataBaseManager::allWordsClean(QTableView* table)
@@ -70,5 +113,5 @@ void DataBaseManager::allWordsClean(QTableView* table)
 
 void DataBaseManager::wordClean(QTableView* table)
 {
-    qDebug()<<"Ochistka vyibrannyikh slov!";
+    table->setModel(nullptr);
 }

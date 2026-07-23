@@ -9,6 +9,7 @@
 #include <QSqlError>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
+#include <QHeaderView>
 
 class DataBaseManager: public QObject
 {

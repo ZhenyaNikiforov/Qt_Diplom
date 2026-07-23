@@ -4,6 +4,8 @@ DataBaseManager::DataBaseManager(QObject *parent)
 : QObject(parent)
 {
     this->myDb = QSqlDatabase::addDatabase("QPSQL");
+    this->modelAll = new QSqlQueryModel(this);
+    this->modelPrivate = new QSqlQueryModel(this);
 }
 
 void DataBaseManager::connectDB(QString host, QString port, QString user, QString password, QString dataBase)
@@ -36,7 +38,24 @@ void DataBaseManager::connectDB(QString host, QString port, QString user, QStrin
 
 void DataBaseManager::allWordsSearch(QTableView* table)
 {
-    qDebug()<<"Vse slova poisk!";
+    QSqlQuery query(this->myDb);
+    query.prepare(R"(
+        SELECT
+            w.word_text AS "Слово",
+            SUM(fw.word_count) AS "Общая частота"
+        FROM file_words fw
+        JOIN words w ON fw.word_id = w.id
+        GROUP BY w.id, w.word_text
+        ORDER BY "Общая частота" DESC;
+    )");
+    if (!query.exec())
+    {
+        qDebug() << "Ошибка выполнения SQL:" << query.lastError().text();
+        return;
+    }
+    this->modelAll->setQuery(std::move(query));
+    table->setModel(modelAll);
+
 }
 
 void DataBaseManager::wordSearch(QTableView* table, QString wordInput)
@@ -46,7 +65,7 @@ void DataBaseManager::wordSearch(QTableView* table, QString wordInput)
 
 void DataBaseManager::allWordsClean(QTableView* table)
 {
-    qDebug()<<"Vse slova ochistka!";
+    table->setModel(nullptr);
 }
 
 void DataBaseManager::wordClean(QTableView* table)

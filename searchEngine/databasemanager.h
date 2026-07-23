@@ -7,6 +7,8 @@
 #include <QTableView>
 #include <QSqlDatabase>
 #include <QSqlError>
+#include <QSqlQueryModel>
+#include <QSqlQuery>
 
 class DataBaseManager: public QObject
 {
@@ -14,6 +16,8 @@ class DataBaseManager: public QObject
 
 private:
     QSqlDatabase myDb;
+    QSqlQueryModel *modelAll;
+    QSqlQueryModel *modelPrivate;
 
 public:
     explicit DataBaseManager(QObject *parent = nullptr);

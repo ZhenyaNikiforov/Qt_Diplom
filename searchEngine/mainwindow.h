@@ -26,7 +26,7 @@ private:
     Ui::MainWindow *ui;
 
 private slots:
-    void on_connect_clicked();
+    void on_connectDB_clicked();
 
     void on_allWordsSearch_clicked();
     void on_wordSearch_clicked();

@@ -89,9 +89,9 @@
      <widget class="QLineEdit" name="dataBase"/>
     </item>
     <item>
-     <widget class="QPushButton" name="connect">
+     <widget class="QPushButton" name="connectDB">
       <property name="text">
-       <string>Подключиться</string>
+       <string>Подключимся?</string>
       </property>
      </widget>
     </item>
